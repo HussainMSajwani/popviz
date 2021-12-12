@@ -1,0 +1,7 @@
+rule merge:
+    input:
+        glob_wildcards("habiba/{name}.bim")
+    output:
+        "{dataset}/merged"
+    shell:
+        "cat {input} > {dataset}/merged"

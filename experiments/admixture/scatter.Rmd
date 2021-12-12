@@ -1,0 +1,48 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r}
+library(tidyverse)
+library(scatterpie)
+```
+test
+```{r}
+PC_df <- read_delim("final_pca.eigenvec", " ", col_names = c("_", "ID", str_c("PC", 1:20)))
+PC_df
+```
+```{r}
+admix_df <- read_delim("final_shared.8.Q", " ", 
+                       col_names=c('Subsahara', 'NorthAfrica', 
+                           'MiddleEast', 'CentralSouthAsia',
+                           'EastAsia', 'Oceania', 
+                           'Europe', 'America'))
+
+admix_df$ID <- PC_df$ID
+df <- left_join(PC_df, admix_df)
+df
+```
+
+
+```{r}
+ggplot(PC_df) +
+  geom_point(aes(PC1, PC2))
+```
+
+```{r}
+ggplot() + 
+  geom_scatterpie(data = df, aes(x=PC1, y=PC2),
+                  cols=c('Subsahara', 'NorthAfrica', 
+                           'MiddleEast', 'CentralSouthAsia',
+                           'EastAsia', 'Oceania', 
+                           'Europe', 'America')) +
+  coord_equal()
+ggsave("pie.pdf", scale = 10)
+```
+
+```{r}
+gg
+```
+
